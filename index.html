@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#050505">
+    <meta name="theme-color" content="#000000">
     <title>HyperSpawn Studios — Building in stealth</title>
     <!-- TODO: Approve the launch and social-share description before publishing. -->
     <meta name="description" content="An AI-driven game studio. Building in stealth. Creating the pipeline to ship games in weeks.">
@@ -28,7 +28,7 @@
     <meta name="twitter:image" content="https://hyperspawn.gg/images/share.jpg">
     <meta name="twitter:image:alt" content="The silver HyperSpawn emblem, glowing orange star, and HYPERSPAWN wordmark on charcoal.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preload" as="image" href="images/hero.jpg">
+    <link rel="preload" as="image" href="images/hero-mark.png">
   </head>
   <body>
     <header class="masthead">
@@ -37,9 +37,11 @@
       <span class="status"><span class="status-light" aria-hidden="true"></span> Building in stealth</span>
     </header>
     <main class="hero">
-      <!-- Selected banner option 4; keep the wordmark below as a sharp vector. -->
+      <!-- Transparent mark extracted from option 4; keep the wordmark as a sharp vector. -->
       <div class="hero-copy">
-        <div class="hero-art" aria-hidden="true"></div>
+        <div class="hero-art" aria-hidden="true">
+          <img class="hero-mark" src="images/hero-mark.png" width="1080" height="804" alt="" fetchpriority="high">
+        </div>
         <h1 aria-label="HyperSpawn Studios">
           <svg class="wordmark" viewBox="0 0 680 60" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
             <defs>
