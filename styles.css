@@ -66,20 +66,10 @@ body {
   margin-bottom: -12px;
 }
 
-.hero-mark {
-  display: block;
-  width: auto;
-  height: 100%;
-  max-width: 100%;
-  object-fit: contain;
-  animation: float 7s ease-in-out infinite;
-}
-
 .hero-copy {
   width: 100%;
   padding: 0 22px 24px;
   text-align: center;
-  animation: arrive 900ms ease-out both;
 }
 
 h1 {
@@ -111,7 +101,7 @@ h1 span {
 }
 
 .description {
-  max-width: 600px;
+  max-width: 680px;
   margin: 27px auto 0;
   color: #aaa8a3;
   font-size: 14px;
@@ -144,16 +134,6 @@ footer {
   text-align: center;
 }
 
-@keyframes arrive {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
 @media (min-width: 700px) {
   .masthead { padding: 22px 40px; }
   .brand-mark { width: 48px; height: 48px; }
@@ -163,7 +143,76 @@ footer {
   footer { padding-bottom: 26px; }
 }
 
+/* Nested transforms let the assembly breathe independently of cursor depth. */
+.assembly {
+  position: relative;
+  width: min(100%, calc(clamp(210px, 38svh, 400px) * 1080 / 804));
+  aspect-ratio: 1080 / 804;
+  animation: assembly-float 7s ease-in-out infinite;
+}
+
+.assembly img { display: block; width: 100%; height: 100%; }
+.logo-layer, .parallax-layer, .breath-layer { position: absolute; inset: 0; }
+.left .breath-layer { animation: breathe-left 7s ease-in-out infinite; }
+.right .breath-layer { animation: breathe-right 7s ease-in-out infinite; }
+.star .breath-layer {
+  transform-origin: 50% 48%;
+  animation: breathe-star 7s ease-in-out infinite;
+}
+
+.star-energy, .star-flare { position: absolute; inset: 0; opacity: 0; mix-blend-mode: screen; }
+.star-energy { animation: energy 7s ease-in-out infinite; }
+.star-flare { animation: star-flare 9s ease-in-out infinite; }
+.metal-glint { position: absolute; inset: 0; overflow: hidden; }
+.left .metal-glint { clip-path: polygon(23.5% 29%, 42% 12%, 42% 40.5%, 34.4% 47.9%, 42% 55.5%, 42% 85.5%, 23.5% 67%); }
+.right .metal-glint { clip-path: polygon(58% 12%, 76.5% 29%, 76.5% 67%, 58% 85.5%, 58% 55.5%, 65.6% 47.9%, 58% 40.5%); }
+.metal-glint i {
+  position: absolute;
+  inset: -20% auto -20% -25%;
+  width: 19%;
+  background: linear-gradient(90deg, transparent, #fff8, transparent);
+  transform: translateX(0) skewX(-22deg);
+  opacity: 0;
+  animation: metal-sweep 9s ease-in-out infinite;
+}
+
+@keyframes assembly-float { 50% { transform: translateY(-2px); } }
+@keyframes breathe-left { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-1.8%); } }
+@keyframes breathe-right { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(1.8%); } }
+@keyframes breathe-star { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+@keyframes energy { 0%, 100% { opacity: 0; } 50% { opacity: .08; } }
+@keyframes metal-sweep {
+  0%, 60% { transform: translateX(0) skewX(-22deg); opacity: 0; }
+  64%, 81% { opacity: .45; }
+  87%, 100% { transform: translateX(790%) skewX(-22deg); opacity: 0; }
+}
+@keyframes star-flare { 0%, 70%, 84%, 100% { opacity: 0; } 76% { opacity: .5; } }
+
+/* Draw perspective directly in SVG: no minified texture or rotating hairlines.
+   Rails and rows share the same square floor-plane projection. */
+.grid-floor {
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  left: 0;
+  right: 0;
+  top: 72%;
+  bottom: -20px;
+  overflow: hidden;
+  color: #ffb13c;
+  opacity: .24;
+  mask-image: linear-gradient(transparent 8%, #000 46%, #000 72%, transparent), linear-gradient(90deg, transparent, #000 24%, #000 76%, transparent);
+  mask-composite: intersect;
+}
+
+.grid-floor svg { display: block; width: 100%; height: 100%; overflow: hidden; }
+.grid-floor path { fill: none; stroke: currentColor; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.grid-rails { opacity: .75; }
+.grid-row { opacity: .65; }
+
 @media (prefers-reduced-motion: reduce) {
-  .hero-copy, .hero-mark { animation: none; }
+  .assembly, .assembly .breath-layer, .star-energy, .star-flare, .metal-glint i { animation: none; }
+  .parallax-layer { transform: none !important; }
+  .star-energy, .star-flare, .metal-glint { opacity: 0; }
   .contact { transition: none; }
 }
