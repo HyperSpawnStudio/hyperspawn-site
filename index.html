@@ -28,7 +28,10 @@
     <meta name="twitter:image" content="https://hyperspawn.gg/images/share.jpg">
     <meta name="twitter:image:alt" content="The silver HyperSpawn emblem, glowing orange star, and HYPERSPAWN wordmark on charcoal.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="preload" as="image" href="images/hero-mark.png">
+    <link rel="preload" as="image" href="images/motion/left-blade.png">
+    <link rel="preload" as="image" href="images/motion/right-blade.png">
+    <link rel="preload" as="image" href="images/motion/star.png">
+    <script src="motion.js" defer></script>
   </head>
   <body>
     <header class="masthead">
@@ -37,10 +40,49 @@
       <span class="status"><span class="status-light" aria-hidden="true"></span> Building in stealth</span>
     </header>
     <main class="hero">
-      <!-- Transparent mark extracted from option 4; keep the wordmark as a sharp vector. -->
+      <div class="grid-floor" aria-hidden="true">
+        <svg viewBox="0 0 1440 260" preserveAspectRatio="none" focusable="false" xmlns="http://www.w3.org/2000/svg">
+          <path class="grid-rails" d="M720 0  -720 260 M720 0  -630 260 M720 0  -540 260 M720 0  -450 260 M720 0  -360 260 M720 0  -270 260 M720 0  -180 260 M720 0  -90 260 M720 0  0 260 M720 0  90 260 M720 0  180 260 M720 0  270 260 M720 0  360 260 M720 0  450 260 M720 0  540 260 M720 0  630 260 M720 0  720 260 M720 0  810 260 M720 0  900 260 M720 0  990 260 M720 0  1080 260 M720 0  1170 260 M720 0  1260 260 M720 0  1350 260 M720 0  1440 260 M720 0  1530 260 M720 0  1620 260 M720 0  1710 260 M720 0  1800 260 M720 0  1890 260 M720 0  1980 260 M720 0  2070 260 M720 0  2160 260"/>
+          <path class="grid-row" style="--row-y: 4px; animation-delay: -0s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 6.92px; animation-delay: -7s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 11.96px; animation-delay: -14s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 20.69px; animation-delay: -21s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 35.78px; animation-delay: -28s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 61.87px; animation-delay: -35s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 106.99px; animation-delay: -42s" d="M0 0H1440"/>
+          <path class="grid-row" style="--row-y: 185.04px; animation-delay: -49s" d="M0 0H1440"/>
+        </svg>
+      </div>
+      <!-- Three transparent layers preserve the original mark; the wordmark stays vector. -->
       <div class="hero-copy">
         <div class="hero-art" aria-hidden="true">
-          <img class="hero-mark" src="images/hero-mark.png" width="1080" height="804" alt="" fetchpriority="high">
+          <div class="assembly">
+            <div class="logo-layer left">
+              <div class="parallax-layer" data-depth=".55">
+                <div class="breath-layer">
+                  <img src="images/motion/left-blade.png" width="1080" height="804" alt="" fetchpriority="high">
+                  <div class="metal-glint"><i></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="logo-layer right">
+              <div class="parallax-layer" data-depth=".8">
+                <div class="breath-layer">
+                  <img src="images/motion/right-blade.png" width="1080" height="804" alt="" fetchpriority="high">
+                  <div class="metal-glint"><i></i></div>
+                </div>
+              </div>
+            </div>
+            <div class="logo-layer star">
+              <div class="parallax-layer" data-depth="1.5">
+                <div class="breath-layer">
+                  <img src="images/motion/star.png" width="1080" height="804" alt="" fetchpriority="high">
+                  <img class="star-energy" src="images/motion/star.png" width="1080" height="804" alt="">
+                  <img class="star-flare" src="images/motion/star.png" width="1080" height="804" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <h1 aria-label="HyperSpawn Studios">
           <svg class="wordmark" viewBox="0 0 680 60" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
