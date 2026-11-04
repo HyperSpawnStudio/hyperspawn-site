@@ -110,18 +110,9 @@ h1 span {
   text-transform: uppercase;
 }
 
-.teaser {
-  margin: 27px 0 12px;
-  color: #ffc15c;
-  font-family: "Courier New", monospace;
-  font-size: clamp(15px, 1.7vw, 19px);
-  font-weight: 400;
-  letter-spacing: -0.02em;
-}
-
 .description {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 27px auto 0;
   color: #aaa8a3;
   font-size: 14px;
   line-height: 1.7;
