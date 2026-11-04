@@ -189,7 +189,7 @@ footer {
 @keyframes star-flare { 0%, 70%, 84%, 100% { opacity: 0; } 76% { opacity: .5; } }
 
 /* Draw perspective directly in SVG: no minified texture or rotating hairlines.
-   Rails stay fixed; evenly staggered rows drift out from the horizon. */
+   Rails and rows share the same square floor-plane projection. */
 .grid-floor {
   position: absolute;
   z-index: -1;
@@ -208,29 +208,11 @@ footer {
 .grid-floor svg { display: block; width: 100%; height: 100%; overflow: hidden; }
 .grid-floor path { fill: none; stroke: currentColor; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
 .grid-rails { opacity: .75; }
-.grid-row {
-  opacity: .65;
-  animation: grid-travel 56s linear infinite;
-}
-
-/* Exponential spacing reads as steady travel across a perspective floor.
-   Each row resets beyond the visible crop, with its replacement in the horizon fade. */
-@keyframes grid-travel {
-  0% { transform: translateY(4px); }
-  12.5% { transform: translateY(6.92px); }
-  25% { transform: translateY(11.96px); }
-  37.5% { transform: translateY(20.69px); }
-  50% { transform: translateY(35.78px); }
-  62.5% { transform: translateY(61.87px); }
-  75% { transform: translateY(106.99px); }
-  87.5% { transform: translateY(185.04px); }
-  100% { transform: translateY(320px); }
-}
+.grid-row { opacity: .65; }
 
 @media (prefers-reduced-motion: reduce) {
   .assembly, .assembly .breath-layer, .star-energy, .star-flare, .metal-glint i { animation: none; }
   .parallax-layer { transform: none !important; }
   .star-energy, .star-flare, .metal-glint { opacity: 0; }
-  .grid-row { animation: none; transform: translateY(var(--row-y)); }
   .contact { transition: none; }
 }

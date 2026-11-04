@@ -44,4 +44,60 @@
       }
     }, { passive: true });
   }
+
+  const floor = document.querySelector('.grid-floor');
+  const grid = floor.querySelector('svg');
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const gridEpoch = document.timeline.currentTime;
+  let gridSize, gridAnimations = [];
+
+  function renderGrid(size) {
+    gridSize = size;
+    gridAnimations.forEach(animation => animation.cancel());
+    gridAnimations = [];
+    const { width, height } = size;
+    if (!width || !height) return;
+
+    // World cells are 1 × 1. Project a level camera above the floor:
+    // screenX = center + worldX * focal / depth; screenY = cameraHeight * focal / depth.
+    // Size the nearest cells for this viewport, without stretching the SVG afterward.
+    const cellWidth = Math.max(42, Math.min(90, width / 20));
+    const cameraHeight = height / cellWidth;
+    const focal = height;
+    const projection = cameraHeight * focal;
+    const railCount = Math.ceil(width / (2 * cellWidth * .2));
+    grid.setAttribute('viewBox', `0 0 ${width} ${height}`);
+    const rails = document.createElementNS(svgNS, 'path');
+    rails.setAttribute('class', 'grid-rails');
+    rails.setAttribute('d', Array.from({ length: railCount * 2 + 1 }, (_, i) =>
+      `M${width / 2} 0L${width / 2 + (i - railCount) * cellWidth} ${height}`
+    ).join(' '));
+    const paths = [rails];
+
+    // Include one extra row below the crop and one inside the transparent horizon.
+    // After eight seconds depth n becomes n - 1, exactly its neighbour's old position.
+    const nearest = Math.max(2, Math.floor(cameraHeight));
+    const farthest = Math.ceil(cameraHeight / .08) + 1;
+    for (let depth = nearest; depth <= farthest; depth++) {
+      const row = document.createElementNS(svgNS, 'path');
+      row.setAttribute('class', 'grid-row');
+      row.setAttribute('d', `M0 0H${width}`);
+      row.style.transform = `translateY(${projection / depth}px)`;
+      paths.push(row);
+      if (!reduced.matches) {
+        const keyframes = Array.from({ length: 65 }, (_, step) => ({
+          transform: `translateY(${projection / (depth - step / 64)}px)`,
+          offset: step / 64,
+        }));
+        const animation = row.animate(keyframes, { duration: 8000, iterations: Infinity });
+        animation.startTime = gridEpoch;
+        gridAnimations.push(animation);
+      }
+    }
+    grid.replaceChildren(...paths);
+  }
+
+  new ResizeObserver(([entry]) => renderGrid(entry.contentRect)).observe(floor);
+  reduced.addEventListener('change', () => { if (gridSize) renderGrid(gridSize); });
+
 })();
